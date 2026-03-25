@@ -24,13 +24,6 @@
 </br></br></br>
 
 
-## 브라우저에서 DOM을 다루는 방법
-
-### 이 프로젝트에서 실제로 사용하는 주요 브라우저 API는 아래와 같습니다.
-![alt text](./assets/browser-dom-apis%201.png)
-
-</br></br></br>
-
 ## 실제 DOM 변화를 감지하기 위한 브라우저 API
 
 
