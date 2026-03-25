@@ -30,6 +30,7 @@ python3 -m http.server 8000
 ```text
 .
 ├── app.js
+├── assets
 ├── diff.js
 ├── history.js
 ├── index.html
@@ -52,6 +53,8 @@ python3 -m http.server 8000
 - 이 과정에서 `Reflow`가 발생하면 요소의 크기와 위치를 다시 계산한다.
 - 색상이나 배경처럼 화면만 다시 칠하면 `Repaint`가 발생한다.
 - 그래서 변경된 부분만 골라서 실제 DOM에 반영하는 방식이 전체 렌더링보다 효율적이다.
+
+![리플로우와 리페인트 설명 그림](./assets/browser-cost.svg)
 
 ## Virtual DOM이 필요한 이유
 
@@ -119,6 +122,8 @@ python3 -m http.server 8000
 9. 새 상태를 history에 저장한다.
 10. `Undo`, `Redo`를 누르면 저장된 Virtual DOM으로 왼쪽 실제 DOM, 오른쪽 HTML 입력창, 오른쪽 미리보기를 함께 다시 렌더링한다.
 
+![Virtual DOM 전체 흐름 그림](./assets/overview-flow.svg)
+
 ## Diff 알고리즘 설명
 
 ### 동작 방식
@@ -137,6 +142,8 @@ python3 -m http.server 8000
 3. 태그 변경: 같은 위치인데 태그가 다르면 해당 노드를 교체한다.
 4. 텍스트 변경: 텍스트 노드 내용이 바뀌면 텍스트만 교체한다.
 5. 속성 변경: `class`, `data-id` 같은 속성 차이만 따로 반영한다.
+
+![Diff 5가지 케이스 요약 그림](./assets/diff-cases.svg)
 
 ### 실제 DOM 반영 방법
 
@@ -165,6 +172,8 @@ python3 -m http.server 8000
 3. `li` 하나를 지우고 `Patch`를 눌렀을 때 왼쪽 목록에서도 해당 노드가 제거되는지 확인
 4. `li`를 하나 더 추가하고 `Patch`를 눌렀을 때 왼쪽 목록에 새 노드가 추가되는지 확인
 5. 잘못된 HTML 구조를 넣었을 때 오른쪽 미리보기에 오류 메시지가 나오고 `Patch` 버튼이 비활성화되는지 확인
+
+![발표 시연 순서 그림](./assets/demo-flow.svg)
 
 ## 한계점
 
