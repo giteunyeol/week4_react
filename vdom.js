@@ -1,6 +1,6 @@
 const IGNORED_ATTRIBUTES = new Set(["contenteditable", "spellcheck", "data-edit-root"]);
 
-export function domToVNode(node) {
+function domToVNode(node) {
   if (!node) {
     return null;
   }
@@ -46,7 +46,7 @@ export function domToVNode(node) {
   };
 }
 
-export function renderVNode(vnode) {
+function renderVNode(vnode) {
   if (!vnode) {
     return document.createTextNode("");
   }
@@ -68,6 +68,12 @@ export function renderVNode(vnode) {
   return element;
 }
 
-export function cloneVNode(vnode) {
+function cloneVNode(vnode) {
   return JSON.parse(JSON.stringify(vnode));
 }
+
+window.VDOM = {
+  domToVNode,
+  renderVNode,
+  cloneVNode,
+};

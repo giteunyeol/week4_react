@@ -1,4 +1,4 @@
-import { renderVNode } from "./vdom.js";
+const { renderVNode } = window.VDOM;
 
 function diffProps(oldProps, newProps) {
   const changes = {};
@@ -18,7 +18,7 @@ function diffProps(oldProps, newProps) {
   return changes;
 }
 
-export function diff(oldVNode, newVNode, path = []) {
+function diff(oldVNode, newVNode, path = []) {
   const patches = [];
 
   if (!oldVNode && newVNode) {
@@ -152,7 +152,7 @@ function applySinglePatch(realRoot, patch) {
   }
 }
 
-export function applyPatch(realRoot, patches) {
+function applyPatch(realRoot, patches) {
   const orderedPatches = [...patches].sort(comparePathsDescending);
 
   // 같은 부모의 뒤쪽 자식부터 적용해야 index 기반 비교가 안정적으로 유지된다.
@@ -160,3 +160,8 @@ export function applyPatch(realRoot, patches) {
     applySinglePatch(realRoot, patch);
   });
 }
+
+window.DiffEngine = {
+  diff,
+  applyPatch,
+};

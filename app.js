@@ -1,6 +1,6 @@
-import { applyPatch, diff } from "./diff.js";
-import { createHistoryManager } from "./history.js";
-import { cloneVNode, domToVNode, renderVNode } from "./vdom.js";
+const { diff, applyPatch } = window.DiffEngine;
+const { createHistoryManager } = window.HistoryManager;
+const { cloneVNode, domToVNode, renderVNode } = window.VDOM;
 
 const actualRoot = document.getElementById("actual-root");
 const testRoot = document.getElementById("test-root");

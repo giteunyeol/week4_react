@@ -132,6 +132,14 @@ button:disabled {
   outline-offset: 6px;
 }
 
+#test-root [contenteditable="true"] * {
+  cursor: text;
+}
+
+#test-root [contenteditable="true"] button {
+  pointer-events: none;
+}
+
 .demo-card {
   padding: 20px;
   border: 1px solid #d7e3f0;

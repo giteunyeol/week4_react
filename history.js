@@ -1,6 +1,6 @@
-import { cloneVNode } from "./vdom.js";
+const { cloneVNode } = window.VDOM;
 
-export function createHistoryManager(initialVNode) {
+function createHistoryManager(initialVNode) {
   const snapshots = [cloneVNode(initialVNode)];
   let currentIndex = 0;
 
@@ -40,3 +40,7 @@ export function createHistoryManager(initialVNode) {
     current,
   };
 }
+
+window.HistoryManager = {
+  createHistoryManager,
+};
