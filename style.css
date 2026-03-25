@@ -654,6 +654,7 @@ button:disabled {
 .guide-card,
 .focus-card,
 .patch-log-wrap,
+.vdom-change-wrap,
 .code-diff-wrap,
 .compare-card,
 .vdom-details {
@@ -749,6 +750,104 @@ button:disabled {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 16px;
+}
+
+.vdom-change-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.compact-card {
+  padding: 16px;
+}
+
+.compact-row {
+  margin-bottom: 12px;
+}
+
+.compact-block {
+  min-height: 220px;
+  max-height: 320px;
+}
+
+.object-change-list {
+  display: grid;
+  gap: 12px;
+}
+
+.object-change-item {
+  padding: 14px;
+  border-radius: 18px;
+  background: rgba(36, 23, 15, 0.04);
+  border: 1px solid rgba(36, 23, 15, 0.06);
+}
+
+.object-change-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.object-change-title {
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--navy);
+}
+
+.object-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: var(--gold-soft);
+  color: #7d5412;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.object-diff-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.object-diff-side {
+  padding: 10px 12px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(36, 23, 15, 0.06);
+}
+
+.object-diff-side strong {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.object-diff-side pre {
+  margin: 0;
+  white-space: pre-wrap;
+  word-break: break-word;
+  font-family: var(--mono);
+  font-size: 11px;
+  line-height: 1.55;
+}
+
+.object-empty {
+  padding: 14px 16px;
+  border-radius: 18px;
+  background: rgba(36, 23, 15, 0.04);
+  border: 1px solid rgba(36, 23, 15, 0.06);
+  color: var(--muted);
+  line-height: 1.6;
+  font-weight: 600;
 }
 
 .section-title-row {
@@ -1027,6 +1126,7 @@ button:disabled {
   }
 
   .compare-grid,
+  .vdom-change-grid,
   .vdom-grid {
     grid-template-columns: 1fr;
   }

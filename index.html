@@ -107,6 +107,30 @@
               <ul id="patch-log" class="patch-log"></ul>
             </section>
 
+            <section class="vdom-change-wrap">
+              <div class="section-title-row">
+                <h3>VDOM Change Objects</h3>
+                <span>DOM 말고 객체 변화만 보기</span>
+              </div>
+              <div class="vdom-change-grid">
+                <article class="compare-card compact-card">
+                  <div class="section-title-row compact-row">
+                    <h3>Patch Objects</h3>
+                    <span>focused component 기준</span>
+                  </div>
+                  <pre id="vdom-change-json" class="code-block compact-block"></pre>
+                </article>
+
+                <article class="compare-card compact-card">
+                  <div class="section-title-row compact-row">
+                    <h3>Before / After Object Diff</h3>
+                    <span>변경된 값만 표시</span>
+                  </div>
+                  <div id="vdom-change-cards" class="object-change-list"></div>
+                </article>
+              </div>
+            </section>
+
             <section class="code-diff-wrap">
               <div class="section-title-row">
                 <h3>HTML Diff</h3>

@@ -6,6 +6,8 @@
   var afterPreviewWrap = document.getElementById("after-preview-wrap");
   var beforeVdom = document.getElementById("before-vdom");
   var afterVdom = document.getElementById("after-vdom");
+  var vdomChangeJson = document.getElementById("vdom-change-json");
+  var vdomChangeCards = document.getElementById("vdom-change-cards");
   var patchLog = document.getElementById("patch-log");
   var gitDiff = document.getElementById("git-diff");
   var focusTitle = document.getElementById("focus-title");
@@ -28,6 +30,8 @@
     !afterPreviewWrap ||
     !beforeVdom ||
     !afterVdom ||
+    !vdomChangeJson ||
+    !vdomChangeCards ||
     !patchLog ||
     !gitDiff ||
     !window.DiffEngine ||
@@ -453,6 +457,124 @@
     return "A change was detected in this component.";
   }
 
+  function summarizeVNodeNode(node) {
+    if (!node) {
+      return null;
+    }
+
+    if (node.type === "text") {
+      return {
+        type: "text",
+        text: node.text,
+      };
+    }
+
+    return {
+      type: node.type,
+      tag: node.tag,
+      props: node.props,
+      childrenCount: node.children ? node.children.length : 0,
+    };
+  }
+
+  function pickChangedProps(sourceProps, changedProps) {
+    var keys = Object.keys(changedProps || {});
+    var result = {};
+
+    keys.forEach(function eachKey(key) {
+      if (sourceProps && Object.prototype.hasOwnProperty.call(sourceProps, key)) {
+        result[key] = sourceProps[key];
+      } else {
+        result[key] = null;
+      }
+    });
+
+    return result;
+  }
+
+  function getPatchBeforeValue(patch, beforeVNode) {
+    var previousNode = getNodeByPath(beforeVNode, patch.path);
+
+    if (patch.type === "TEXT") {
+      return previousNode ? previousNode.text : null;
+    }
+
+    if (patch.type === "PROPS") {
+      return pickChangedProps(previousNode && previousNode.props, patch.props);
+    }
+
+    if (patch.type === "REMOVE" || patch.type === "REPLACE") {
+      return summarizeVNodeNode(previousNode);
+    }
+
+    return null;
+  }
+
+  function getPatchAfterValue(patch, afterVNode) {
+    var nextNode = getNodeByPath(afterVNode, patch.path);
+
+    if (patch.type === "TEXT") {
+      return patch.text;
+    }
+
+    if (patch.type === "PROPS") {
+      return pickChangedProps(nextNode && nextNode.props, patch.props);
+    }
+
+    if (patch.type === "ADD" || patch.type === "REPLACE") {
+      return summarizeVNodeNode(patch.node || nextNode);
+    }
+
+    return null;
+  }
+
+  function formatObjectValue(value) {
+    if (value === null || value === undefined) {
+      return "null";
+    }
+
+    return JSON.stringify(value, null, 2);
+  }
+
+  function renderVdomChangeObjects(beforeVNode, afterVNode) {
+    var objectPatches = diff(beforeVNode, afterVNode);
+
+    if (!objectPatches.length) {
+      vdomChangeJson.textContent = "[]";
+      vdomChangeCards.innerHTML =
+        '<div class="object-empty">아직 바뀐 Virtual DOM 객체가 없습니다. Like를 누르면 바뀐 path와 before/after 값을 여기서 바로 볼 수 있습니다.</div>';
+      return;
+    }
+
+    vdomChangeJson.textContent = JSON.stringify(objectPatches, null, 2);
+    vdomChangeCards.innerHTML = objectPatches
+      .map(function mapPatch(patch) {
+        var pathLabel = patch.path.length ? patch.path.join(" > ") : "root";
+        var beforeValue = formatObjectValue(getPatchBeforeValue(patch, beforeVNode));
+        var afterValue = formatObjectValue(getPatchAfterValue(patch, afterVNode));
+
+        return [
+          '<article class="object-change-item">',
+          '<div class="object-change-head">',
+          '<span class="object-change-title">' + escapeHTML(pathLabel) + "</span>",
+          '<span class="object-pill">' + escapeHTML(patch.type) + "</span>",
+          "</div>",
+          '<div class="object-diff-grid">',
+          '<div class="object-diff-side">',
+          "<strong>Before</strong>",
+          "<pre>" + escapeHTML(beforeValue) + "</pre>",
+          "</div>",
+          '<div class="object-diff-side">',
+          "<strong>After</strong>",
+          "<pre>" + escapeHTML(afterValue) + "</pre>",
+          "</div>",
+          "</div>",
+          "</article>",
+        ].join("");
+      })
+      .join("");
+  }
+
   function renderPatchLog(patches, previousVNode, nextVNode) {
     if (!patches.length) {
       patchLog.innerHTML =
@@ -639,6 +761,7 @@
     actionStatus.textContent = meta.actionMessage;
 
     renderPatchLog(focusedPatches, previousVNode, nextVNode);
+    renderVdomChangeObjects(beforeFocusedVNode, afterFocusedVNode);
     renderGitDiff(beforeFocusedVNode, afterFocusedVNode);
     animateFocus(meta);
   }
