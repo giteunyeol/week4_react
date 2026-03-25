@@ -6,8 +6,13 @@
   var afterPreviewWrap = document.getElementById("after-preview-wrap");
   var beforeVdom = document.getElementById("before-vdom");
   var afterVdom = document.getElementById("after-vdom");
+  var vdomChangeJson = document.getElementById("vdom-change-json");
+  var vdomChangeCards = document.getElementById("vdom-change-cards");
   var patchLog = document.getElementById("patch-log");
   var gitDiff = document.getElementById("git-diff");
+  var historyList = document.getElementById("history-list");
+  var historySummary = document.getElementById("history-summary");
+  var historyPosition = document.getElementById("history-position");
   var focusTitle = document.getElementById("focus-title");
   var patchSummary = document.getElementById("patch-summary");
   var feedStatus = document.getElementById("feed-status");
@@ -28,8 +33,13 @@
     !afterPreviewWrap ||
     !beforeVdom ||
     !afterVdom ||
+    !vdomChangeJson ||
+    !vdomChangeCards ||
     !patchLog ||
     !gitDiff ||
+    !historyList ||
+    !historySummary ||
+    !historyPosition ||
     !window.DiffEngine ||
     !window.HistoryManager ||
     !window.VDOM
@@ -453,6 +463,183 @@
     return "A change was detected in this component.";
   }
 
+  function summarizeVNodeNode(node) {
+    if (!node) {
+      return null;
+    }
+
+    if (node.type === "text") {
+      return {
+        type: "text",
+        text: node.text,
+      };
+    }
+
+    return {
+      type: node.type,
+      tag: node.tag,
+      props: node.props,
+      childrenCount: node.children ? node.children.length : 0,
+    };
+  }
+
+  function pickChangedProps(sourceProps, changedProps) {
+    var keys = Object.keys(changedProps || {});
+    var result = {};
+
+    keys.forEach(function eachKey(key) {
+      if (sourceProps && Object.prototype.hasOwnProperty.call(sourceProps, key)) {
+        result[key] = sourceProps[key];
+      } else {
+        result[key] = null;
+      }
+    });
+
+    return result;
+  }
+
+  function getPatchBeforeValue(patch, beforeVNode) {
+    var previousNode = getNodeByPath(beforeVNode, patch.path);
+
+    if (patch.type === "TEXT") {
+      return previousNode ? previousNode.text : null;
+    }
+
+    if (patch.type === "PROPS") {
+      return pickChangedProps(previousNode && previousNode.props, patch.props);
+    }
+
+    if (patch.type === "REMOVE" || patch.type === "REPLACE") {
+      return summarizeVNodeNode(previousNode);
+    }
+
+    return null;
+  }
+
+  function getPatchAfterValue(patch, afterVNode) {
+    var nextNode = getNodeByPath(afterVNode, patch.path);
+
+    if (patch.type === "TEXT") {
+      return patch.text;
+    }
+
+    if (patch.type === "PROPS") {
+      return pickChangedProps(nextNode && nextNode.props, patch.props);
+    }
+
+    if (patch.type === "ADD" || patch.type === "REPLACE") {
+      return summarizeVNodeNode(patch.node || nextNode);
+    }
+
+    return null;
+  }
+
+  function formatObjectValue(value) {
+    if (value === null || value === undefined) {
+      return "null";
+    }
+
+    return JSON.stringify(value, null, 2);
+  }
+
+  function countLikedInState(state) {
+    return state.posts.filter(function filterPost(post) {
+      return post.liked;
+    }).length;
+  }
+
+  function summarizeLikedAuthors(state) {
+    var likedAuthors = state.posts
+      .filter(function filterPost(post) {
+        return post.liked;
+      })
+      .map(function mapPost(post) {
+        return post.author;
+      });
+
+    return likedAuthors.length ? likedAuthors.join(", ") : "없음";
+  }
+
+  function buildHistoryEntryLabel(index) {
+    if (index === 0) {
+      return "초기 상태";
+    }
+
+    return "저장 상태 " + index;
+  }
+
+  function renderHistoryTimeline() {
+    var snapshots = stateHistory.getSnapshots();
+    var currentIndex = stateHistory.getCurrentIndex();
+
+    historyPosition.textContent = "STEP " + (currentIndex + 1) + " / " + snapshots.length;
+    historySummary.textContent =
+      "현재 " +
+      (currentIndex + 1) +
+      "번째 상태를 보고 있습니다. 좋아요가 눌린 카드 수: " +
+      countLikedInState(snapshots[currentIndex]) +
+      "개";
+
+    historyList.innerHTML = snapshots
+      .map(function mapSnapshot(snapshot, index) {
+        var likedCount = countLikedInState(snapshot);
+        var activeClass = index === currentIndex ? " is-active" : "";
+
+        return [
+          '<article class="history-item' + activeClass + '">',
+          '<div class="history-item-head">',
+          '<span class="history-step">STEP ' + (index + 1) + "</span>",
+          '<span class="history-badge">' + (index === currentIndex ? "CURRENT" : "SNAPSHOT") + "</span>",
+          "</div>",
+          '<h3 class="history-title">' + escapeHTML(buildHistoryEntryLabel(index)) + "</h3>",
+          '<p class="history-meta">좋아요 켜진 카드: ' + escapeHTML(String(likedCount)) + "개</p>",
+          '<p class="history-meta">좋아요 상태: ' + escapeHTML(summarizeLikedAuthors(snapshot)) + "</p>",
+          '<p class="history-meta">전체 피드 수: ' + escapeHTML(String(snapshot.posts.length)) + "개</p>",
+          "</article>",
+        ].join("");
+      })
+      .join("");
+  }
+
+  function renderVdomChangeObjects(beforeVNode, afterVNode) {
+    var objectPatches = diff(beforeVNode, afterVNode);
+
+    if (!objectPatches.length) {
+      vdomChangeJson.textContent = "[]";
+      vdomChangeCards.innerHTML =
+        '<div class="object-empty">아직 바뀐 Virtual DOM 객체가 없습니다. Like를 누르면 바뀐 path와 before/after 값을 여기서 바로 볼 수 있습니다.</div>';
+      return;
+    }
+
+    vdomChangeJson.textContent = JSON.stringify(objectPatches, null, 2);
+    vdomChangeCards.innerHTML = objectPatches
+      .map(function mapPatch(patch) {
+        var pathLabel = patch.path.length ? patch.path.join(" > ") : "root";
+        var beforeValue = formatObjectValue(getPatchBeforeValue(patch, beforeVNode));
+        var afterValue = formatObjectValue(getPatchAfterValue(patch, afterVNode));
+
+        return [
+          '<article class="object-change-item">',
+          '<div class="object-change-head">',
+          '<span class="object-change-title">' + escapeHTML(pathLabel) + "</span>",
+          '<span class="object-pill">' + escapeHTML(patch.type) + "</span>",
+          "</div>",
+          '<div class="object-diff-grid">',
+          '<div class="object-diff-side">',
+          "<strong>Before</strong>",
+          "<pre>" + escapeHTML(beforeValue) + "</pre>",
+          "</div>",
+          '<div class="object-diff-side">',
+          "<strong>After</strong>",
+          "<pre>" + escapeHTML(afterValue) + "</pre>",
+          "</div>",
+          "</div>",
+          "</article>",
+        ].join("");
+      })
+      .join("");
+  }
+
   function renderPatchLog(patches, previousVNode, nextVNode) {
     if (!patches.length) {
       patchLog.innerHTML =
@@ -639,7 +826,9 @@
     actionStatus.textContent = meta.actionMessage;
 
     renderPatchLog(focusedPatches, previousVNode, nextVNode);
+    renderVdomChangeObjects(beforeFocusedVNode, afterFocusedVNode);
     renderGitDiff(beforeFocusedVNode, afterFocusedVNode);
+    renderHistoryTimeline();
     animateFocus(meta);
   }
 
