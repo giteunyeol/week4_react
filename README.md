@@ -16,7 +16,7 @@
 
 </br></br></br>
 
-## 일반적인 React 환경에서 virtual DOM FLOW
+## 일반적인 React 환경에서 virtual DOM FLOW  &nbsp; (CSR SPA의 경우)
 
 
 ![alt text](./assets/처음세팅.png)
