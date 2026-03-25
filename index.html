@@ -43,9 +43,17 @@
         <section class="panel">
           <div class="panel-header">
             <h2>테스트 영역</h2>
-            <span>직접 수정 가능</span>
+            <span id="preview-status">HTML을 수정해 보세요</span>
           </div>
-          <div id="test-root" class="panel-body"></div>
+          <div class="panel-body test-panel">
+            <div class="editor-guide">
+              오른쪽 HTML을 수정하면 아래 미리보기가 바로 바뀌고, <strong>Patch</strong> 버튼으로 왼쪽 실제 DOM에 반영됩니다.
+            </div>
+            <label class="editor-label" for="markup-editor">수정할 HTML</label>
+            <textarea id="markup-editor" class="markup-editor" spellcheck="false"></textarea>
+            <label class="editor-label" for="test-root">테스트 미리보기 DOM</label>
+            <div id="test-root" class="preview-root"></div>
+          </div>
         </section>
       </main>
     </div>

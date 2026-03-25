@@ -72,8 +72,37 @@ function cloneVNode(vnode) {
   return JSON.parse(JSON.stringify(vnode));
 }
 
+function escapeHTML(value) {
+  return value
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+}
+
+function vnodeToHTML(vnode, depth) {
+  const currentDepth = depth || 0;
+  const indent = "  ".repeat(currentDepth);
+
+  if (vnode.type === "text") {
+    return indent + escapeHTML(vnode.text);
+  }
+
+  const props = Object.keys(vnode.props)
+    .map((key) => ` ${key}="${escapeHTML(vnode.props[key])}"`)
+    .join("");
+
+  if (vnode.children.length === 0) {
+    return `${indent}<${vnode.tag}${props}></${vnode.tag}>`;
+  }
+
+  const childHTML = vnode.children.map((child) => vnodeToHTML(child, currentDepth + 1)).join("\n");
+  return `${indent}<${vnode.tag}${props}>\n${childHTML}\n${indent}</${vnode.tag}>`;
+}
+
 window.VDOM = {
   domToVNode,
   renderVNode,
   cloneVNode,
+  vnodeToHTML,
 };
