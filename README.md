@@ -12,7 +12,7 @@
 
 ![facebook](./assets/facebook.webp)
 
-- Facebook의 복잡한 UI, 상태동기화를 더 예측 가능하게 다루기 위해 즉, 복잡성을 낮추기 위해 React가 나왔고 virtual DOM은 이를 실용적인 성능으로 가능하게 만든 구현 전략
+- Facebook의 복잡한 UI, 상태 동기화를 더 예측 가능하게 다루기 위해 즉, 복잡성을 낮추기 위해 React가 나왔고 virtual DOM은 이를 실용적인 성능으로 가능하게 만든 구현 전략
 
 </br></br></br>
 
