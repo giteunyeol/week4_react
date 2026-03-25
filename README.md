@@ -1,60 +1,30 @@
-# week_react
+# React_virtualDOM & diff algorithm
 
-Vanilla JavaScript만 사용해서 Virtual DOM, Diff, Patch, Undo / Redo의 핵심 흐름을 최소 기능으로 구현한 과제용 프로젝트입니다.
+## Index
+1. virtual DOM이란
+2. virtual DOM이 왜 필요한가
+3. virtual DOM의 구조
+4. Diff 알고리즘은 언제 어디에 어떻게 쓰이는가
+5. React에서 실제 DOM을 변경할 때, Virtual DOM과 DIFF 알고리즘의 동작 방식
+6. Edge case
+7. 시연
 
-## 프로젝트 목적
 
-- 실제 DOM을 Virtual DOM으로 변환한다.
-- 이전 Virtual DOM과 새 Virtual DOM을 비교해서 diff를 만든다.
-- 변경된 부분만 실제 DOM에 patch 방식으로 반영한다.
-- 상태 history를 저장해서 Undo / Redo를 지원한다.
-- 발표와 시연에 바로 사용할 수 있는 기본 데모 페이지를 제공한다.
+## virtual DOM 이란
 
-## 실행 방법
+- 실제 DOM의 가벼운 복사본
+- 리액트가 UI의 변화를 효율적으로 처리하기 위해 사용된다
 
-1. 저장소를 연다.
-2. `index.html`을 브라우저에서 바로 열거나 간단한 로컬 서버로 실행한다.
-3. 오른쪽 테스트 영역의 HTML 입력창에서 내용을 수정한다.
-4. 아래 미리보기 DOM을 확인한다.
-5. `Patch` 버튼을 눌러 왼쪽 실제 DOM에 변경 내용을 반영한다.
-6. `Undo`, `Redo` 버튼으로 이전 상태와 다음 상태를 확인한다.
 
-이 프로젝트는 외부 라이브러리 없이 동작하므로 파일로 바로 열어도 되고, 필요하면 아래처럼 간단한 로컬 서버로 실행해도 됩니다.
+## virtual DOM이 왜 필요한가
 
-```bash
-python3 -m http.server 8000
-```
+- virtual DOM이 없었을 때 :
+  DOM이 Update 된다 = HTML 요소에 변화가 발생
+  브라우저는 DOM이 변화하면 화면을 다시 그린다
 
-## 폴더 구조
+  ##그런데
+  
 
-```text
-.
-├── app.js
-├── assets
-├── diff.js
-├── history.js
-├── index.html
-├── README.md
-├── style.css
-└── vdom.js
-```
-
-## 사용한 브라우저 API
-
-- `document.getElementById()`로 실제 영역, 테스트 영역, 버튼을 찾는다.
-- `document.createElement()`, `document.createTextNode()`로 Virtual DOM을 실제 DOM으로 렌더링한다.
-- `node.childNodes`, `node.attributes`, `node.textContent`로 실제 DOM을 읽어 Virtual DOM으로 변환한다.
-- `element.appendChild()`, `insertBefore()`, `removeChild()`, `replaceChild()`로 patch를 실제 DOM에 반영한다.
-- `window`와 이벤트 리스너를 이용해 버튼 클릭과 런타임 오류 상태를 처리한다.
-
-## 실제 DOM이 느린 이유
-
-- 실제 DOM을 직접 많이 바꾸면 브라우저가 레이아웃을 다시 계산해야 한다.
-- 이 과정에서 `Reflow`가 발생하면 요소의 크기와 위치를 다시 계산한다.
-- 색상이나 배경처럼 화면만 다시 칠하면 `Repaint`가 발생한다.
-- 그래서 변경된 부분만 골라서 실제 DOM에 반영하는 방식이 전체 렌더링보다 효율적이다.
-
-![리플로우와 리페인트 설명 그림](./assets/browser-cost.svg)
 
 ## Virtual DOM이 필요한 이유
 
