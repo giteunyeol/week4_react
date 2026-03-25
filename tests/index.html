@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Virtual DOM Edge Case Runner</title>
+    <link rel="stylesheet" href="./test-runner.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="hero">
+        <div>
+          <p class="eyebrow">Browser Test Runner</p>
+          <h1>Virtual DOM / Diff Edge Case Runner</h1>
+          <p class="hero-copy">
+            Contract, Smoke, Characterization 테스트를 한 번에 실행합니다. 전체 기능은
+            <code>file://</code> 대신 로컬 HTTP 서버에서 여는 것을 기본으로 합니다.
+          </p>
+        </div>
+
+        <div class="hero-actions">
+          <a class="ghost-link" href="../index.html">앱 열기</a>
+          <button id="run-tests" type="button">Run Tests</button>
+        </div>
+      </header>
+
+      <section class="banner-row">
+        <article class="banner-card">
+          <strong>권장 실행</strong>
+          <p><code>python -m http.server 8000</code> 후 <code>/tests/</code>를 여세요.</p>
+        </article>
+        <article class="banner-card">
+          <strong>Blocking 규칙</strong>
+          <p>Contract / Smoke 실패는 blocking, Characterization은 warning으로 집계합니다.</p>
+        </article>
+      </section>
+
+      <section class="summary-grid">
+        <article class="summary-card">
+          <span class="summary-label">Overall</span>
+          <strong id="overall-status">READY</strong>
+          <p id="overall-detail">아직 실행하지 않았습니다.</p>
+        </article>
+        <article class="summary-card">
+          <span class="summary-label">Total</span>
+          <strong id="total-count">0</strong>
+          <p id="last-run">실행 대기 중</p>
+        </article>
+        <article class="summary-card pass">
+          <span class="summary-label">Pass</span>
+          <strong id="pass-count">0</strong>
+          <p>blocking / warning 구분 없이 통과</p>
+        </article>
+        <article class="summary-card fail">
+          <span class="summary-label">Fail</span>
+          <strong id="fail-count">0</strong>
+          <p>Contract / Smoke blocking failure</p>
+        </article>
+        <article class="summary-card warn">
+          <span class="summary-label">Warn</span>
+          <strong id="warn-count">0</strong>
+          <p>지원 범위 밖이거나 React와 다른 동작</p>
+        </article>
+        <article class="summary-card skip">
+          <span class="summary-label">Skip</span>
+          <strong id="skip-count">0</strong>
+          <p>환경 제약 때문에 건너뜀</p>
+        </article>
+      </section>
+
+      <main class="suite-grid">
+        <section class="suite-card">
+          <div class="suite-head">
+            <div>
+              <p class="suite-kicker">Blocking</p>
+              <h2>Contract</h2>
+            </div>
+            <span id="contract-status" class="suite-badge">READY</span>
+          </div>
+          <p class="suite-copy">
+            <code>render(old) -&gt; diff(old, new) -&gt; applyPatch()</code> 결과가 목표 VDOM과
+            일치하는지, 그리고 입력 VNode가 변형되지 않는지 확인합니다.
+          </p>
+          <ul id="contract-results" class="result-list"></ul>
+        </section>
+
+        <section class="suite-card">
+          <div class="suite-head">
+            <div>
+              <p class="suite-kicker">Blocking</p>
+              <h2>Smoke</h2>
+            </div>
+            <span id="smoke-status" class="suite-badge">READY</span>
+          </div>
+          <p class="suite-copy">
+            실제 앱을 iframe에 띄워 Like, Undo, Redo, Reset을 눌러 보고, 매 단계마다
+            <code>#actual-root</code> DOM이 기대 VDOM과 같은지 확인합니다.
+          </p>
+          <ul id="smoke-results" class="result-list"></ul>
+        </section>
+
+        <section class="suite-card">
+          <div class="suite-head">
+            <div>
+              <p class="suite-kicker">Warning</p>
+              <h2>Characterization</h2>
+            </div>
+            <span id="characterization-status" class="suite-badge">READY</span>
+          </div>
+          <p class="suite-copy">
+            React와 차이 나는 현재 엔진의 실제 동작을 기록합니다. 이 그룹은 blocking이
+            아니라 문서화 목적의 경고로 집계합니다.
+          </p>
+          <ul id="characterization-results" class="result-list"></ul>
+        </section>
+      </main>
+
+      <details class="debug-panel">
+        <summary>Debug Sandbox</summary>
+        <div class="debug-grid">
+          <div>
+            <h3>Engine Sandbox</h3>
+            <div id="engine-sandbox" class="sandbox-box"></div>
+          </div>
+          <div>
+            <h3>App Under Test</h3>
+            <iframe id="app-frame" class="app-frame" title="App under test"></iframe>
+          </div>
+        </div>
+      </details>
+    </div>
+
+    <script defer src="../vdom.js"></script>
+    <script defer src="../diff.js"></script>
+    <script defer src="../history.js"></script>
+    <script defer src="./test-runner.js"></script>
+  </body>
+</html>
