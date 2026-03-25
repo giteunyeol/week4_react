@@ -19,7 +19,7 @@
 
 
 
-![전체 동작 흐름](./assets/overview-flow 1.png)
+![전체 동작 흐름](./assets/overview-flow1.png)
 
 </br></br></br>
 
