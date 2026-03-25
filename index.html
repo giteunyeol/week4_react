@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vanilla Virtual DOM Demo</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <div class="page">
+      <header class="top-bar">
+        <div>
+          <h1>Virtual DOM / Diff / Patch Demo</h1>
+          <p>왼쪽 실제 DOM과 오른쪽 테스트 영역을 비교하는 최소 기능 시연 페이지</p>
+        </div>
+        <div class="button-group">
+          <button id="patch-button" type="button">Patch</button>
+          <button id="undo-button" type="button">Undo</button>
+          <button id="redo-button" type="button">Redo</button>
+        </div>
+      </header>
+
+      <main class="workspace">
+        <section class="panel">
+          <div class="panel-header">
+            <h2>실제 DOM</h2>
+            <span>Patch 대상</span>
+          </div>
+          <div id="actual-root" class="panel-body">
+            <div class="demo-card" data-theme="light">
+              <h1>Mini Virtual DOM</h1>
+              <p class="description">오른쪽 내용을 수정한 뒤 Patch 버튼으로 왼쪽에 반영해 보세요.</p>
+              <ul class="todo-list">
+                <li data-id="1">DOM을 Virtual DOM으로 변환</li>
+                <li data-id="2">Diff 계산</li>
+                <li data-id="3">Patch 적용</li>
+              </ul>
+              <button class="sample-button" type="button">샘플 버튼</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-header">
+            <h2>테스트 영역</h2>
+            <span>직접 수정 가능</span>
+          </div>
+          <div id="test-root" class="panel-body"></div>
+        </section>
+      </main>
+    </div>
+
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>
