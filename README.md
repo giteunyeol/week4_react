@@ -11,7 +11,7 @@
 ## 일반적인 React 환경에서 virtual DOM FLOW
 
 
-![alt text](./assets/처음세팅.png)
+![alt text](./assets/처음세팅.png)
 ![alt text](./assets/React%20작동%20과정-1.png)
 
 </br></br></br>
@@ -19,7 +19,7 @@
 
 
 
-![전체 동작 흐름](<overview-flow 1.png>)
+![전체 동작 흐름](./assets/overview-flow.svg)
 
 </br></br></br>
 
