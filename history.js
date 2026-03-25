@@ -36,6 +36,12 @@ function createHistoryManager(initialVNode) {
     canRedo() {
       return currentIndex < snapshots.length - 1;
     },
+    getSnapshots() {
+      return snapshots.map((snapshot) => cloneVNode(snapshot));
+    },
+    getCurrentIndex() {
+      return currentIndex;
+    },
     current,
   };
 }

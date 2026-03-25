@@ -10,6 +10,9 @@
   var vdomChangeCards = document.getElementById("vdom-change-cards");
   var patchLog = document.getElementById("patch-log");
   var gitDiff = document.getElementById("git-diff");
+  var historyList = document.getElementById("history-list");
+  var historySummary = document.getElementById("history-summary");
+  var historyPosition = document.getElementById("history-position");
   var focusTitle = document.getElementById("focus-title");
   var patchSummary = document.getElementById("patch-summary");
   var feedStatus = document.getElementById("feed-status");
@@ -34,6 +37,9 @@
     !vdomChangeCards ||
     !patchLog ||
     !gitDiff ||
+    !historyList ||
+    !historySummary ||
+    !historyPosition ||
     !window.DiffEngine ||
     !window.HistoryManager ||
     !window.VDOM
@@ -536,6 +542,65 @@
     return JSON.stringify(value, null, 2);
   }
 
+  function countLikedInState(state) {
+    return state.posts.filter(function filterPost(post) {
+      return post.liked;
+    }).length;
+  }
+
+  function summarizeLikedAuthors(state) {
+    var likedAuthors = state.posts
+      .filter(function filterPost(post) {
+        return post.liked;
+      })
+      .map(function mapPost(post) {
+        return post.author;
+      });
+
+    return likedAuthors.length ? likedAuthors.join(", ") : "없음";
+  }
+
+  function buildHistoryEntryLabel(index) {
+    if (index === 0) {
+      return "초기 상태";
+    }
+
+    return "저장 상태 " + index;
+  }
+
+  function renderHistoryTimeline() {
+    var snapshots = stateHistory.getSnapshots();
+    var currentIndex = stateHistory.getCurrentIndex();
+
+    historyPosition.textContent = "STEP " + (currentIndex + 1) + " / " + snapshots.length;
+    historySummary.textContent =
+      "현재 " +
+      (currentIndex + 1) +
+      "번째 상태를 보고 있습니다. 좋아요가 눌린 카드 수: " +
+      countLikedInState(snapshots[currentIndex]) +
+      "개";
+
+    historyList.innerHTML = snapshots
+      .map(function mapSnapshot(snapshot, index) {
+        var likedCount = countLikedInState(snapshot);
+        var activeClass = index === currentIndex ? " is-active" : "";
+
+        return [
+          '<article class="history-item' + activeClass + '">',
+          '<div class="history-item-head">',
+          '<span class="history-step">STEP ' + (index + 1) + "</span>",
+          '<span class="history-badge">' + (index === currentIndex ? "CURRENT" : "SNAPSHOT") + "</span>",
+          "</div>",
+          '<h3 class="history-title">' + escapeHTML(buildHistoryEntryLabel(index)) + "</h3>",
+          '<p class="history-meta">좋아요 켜진 카드: ' + escapeHTML(String(likedCount)) + "개</p>",
+          '<p class="history-meta">좋아요 상태: ' + escapeHTML(summarizeLikedAuthors(snapshot)) + "</p>",
+          '<p class="history-meta">전체 피드 수: ' + escapeHTML(String(snapshot.posts.length)) + "개</p>",
+          "</article>",
+        ].join("");
+      })
+      .join("");
+  }
+
   function renderVdomChangeObjects(beforeVNode, afterVNode) {
     var objectPatches = diff(beforeVNode, afterVNode);
 
@@ -763,6 +828,7 @@
     renderPatchLog(focusedPatches, previousVNode, nextVNode);
     renderVdomChangeObjects(beforeFocusedVNode, afterFocusedVNode);
     renderGitDiff(beforeFocusedVNode, afterFocusedVNode);
+    renderHistoryTimeline();
     animateFocus(meta);
   }
 
