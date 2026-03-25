@@ -45,6 +45,18 @@ body {
   color: var(--subtext);
 }
 
+.runtime-status {
+  margin-top: 12px;
+  display: inline-block;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: #edf4fb;
+  border: 1px solid #cfe0f2;
+  color: #26496f;
+  font-size: 13px;
+  font-weight: 600;
+}
+
 .button-group {
   display: flex;
   gap: 10px;
