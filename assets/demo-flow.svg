@@ -1,0 +1,43 @@
+<svg width="1200" height="470" viewBox="0 0 1200 470" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="470" rx="24" fill="#F7FAFD"/>
+  <text x="60" y="62" fill="#1F2937" font-size="32" font-family="Arial, sans-serif" font-weight="700">Demo Flow for the 40-Second Presentation</text>
+  <text x="60" y="95" fill="#5B6675" font-size="18" font-family="Arial, sans-serif">What to edit, what to click, and what to say while showing the page</text>
+
+  <rect x="80" y="145" width="220" height="210" rx="18" fill="#FFFFFF" stroke="#D7E0EA" stroke-width="2"/>
+  <text x="108" y="190" fill="#2B6CB0" font-size="22" font-family="Arial, sans-serif" font-weight="700">Step 1</text>
+  <text x="108" y="225" fill="#1F2937" font-size="18" font-family="Arial, sans-serif">Edit the right-side</text>
+  <text x="108" y="252" fill="#1F2937" font-size="18" font-family="Arial, sans-serif">HTML source.</text>
+  <text x="108" y="294" fill="#5B6675" font-size="15" font-family="Arial, sans-serif">Example:</text>
+  <text x="108" y="318" fill="#5B6675" font-size="15" font-family="Arial, sans-serif">Change h1 text</text>
+
+  <rect x="350" y="145" width="220" height="210" rx="18" fill="#FFFFFF" stroke="#D7E0EA" stroke-width="2"/>
+  <text x="378" y="190" fill="#2B6CB0" font-size="22" font-family="Arial, sans-serif" font-weight="700">Step 2</text>
+  <text x="378" y="225" fill="#1F2937" font-size="18" font-family="Arial, sans-serif">Preview updates</text>
+  <text x="378" y="252" fill="#1F2937" font-size="18" font-family="Arial, sans-serif">immediately.</text>
+  <text x="378" y="294" fill="#5B6675" font-size="15" font-family="Arial, sans-serif">Show the audience</text>
+  <text x="378" y="318" fill="#5B6675" font-size="15" font-family="Arial, sans-serif">what will be patched.</text>
+
+  <rect x="620" y="145" width="220" height="210" rx="18" fill="#FFFFFF" stroke="#D7E0EA" stroke-width="2"/>
+  <text x="648" y="190" fill="#2B6CB0" font-size="22" font-family="Arial, sans-serif" font-weight="700">Step 3</text>
+  <text x="648" y="225" fill="#1F2937" font-size="18" font-family="Arial, sans-serif">Click Patch.</text>
+  <text x="648" y="252" fill="#1F2937" font-size="18" font-family="Arial, sans-serif">Left real DOM</text>
+  <text x="648" y="279" fill="#1F2937" font-size="18" font-family="Arial, sans-serif">changes only where needed.</text>
+  <text x="648" y="318" fill="#5B6675" font-size="15" font-family="Arial, sans-serif">Mention diff + patch.</text>
+
+  <rect x="890" y="145" width="220" height="210" rx="18" fill="#FFFFFF" stroke="#D7E0EA" stroke-width="2"/>
+  <text x="918" y="190" fill="#2B6CB0" font-size="22" font-family="Arial, sans-serif" font-weight="700">Step 4</text>
+  <text x="918" y="225" fill="#1F2937" font-size="18" font-family="Arial, sans-serif">Click Undo / Redo.</text>
+  <text x="918" y="252" fill="#1F2937" font-size="18" font-family="Arial, sans-serif">Both panels move</text>
+  <text x="918" y="279" fill="#1F2937" font-size="18" font-family="Arial, sans-serif">through history.</text>
+  <text x="918" y="318" fill="#5B6675" font-size="15" font-family="Arial, sans-serif">Mention state history.</text>
+
+  <path d="M300 250H340" stroke="#2B6CB0" stroke-width="4" stroke-linecap="round"/>
+  <path d="M570 250H610" stroke="#2B6CB0" stroke-width="4" stroke-linecap="round"/>
+  <path d="M840 250H880" stroke="#2B6CB0" stroke-width="4" stroke-linecap="round"/>
+  <path d="M340 250L326 242V258L340 250Z" fill="#2B6CB0"/>
+  <path d="M610 250L596 242V258L610 250Z" fill="#2B6CB0"/>
+  <path d="M880 250L866 242V258L880 250Z" fill="#2B6CB0"/>
+
+  <rect x="360" y="384" width="480" height="44" rx="14" fill="#EAF3FB"/>
+  <text x="405" y="412" fill="#1F2937" font-size="18" font-family="Arial, sans-serif" font-weight="700">Best live demo: TEXT change -&gt; Patch -&gt; Undo -&gt; Redo</text>
+</svg>

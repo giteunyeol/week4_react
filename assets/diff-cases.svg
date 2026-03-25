@@ -1,0 +1,35 @@
+<svg width="1200" height="540" viewBox="0 0 1200 540" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="540" rx="24" fill="#F4F8FC"/>
+  <text x="60" y="62" fill="#1F2937" font-size="32" font-family="Arial, sans-serif" font-weight="700">Five Diff Cases in This Project</text>
+  <text x="60" y="95" fill="#5B6675" font-size="18" font-family="Arial, sans-serif">Each change is stored as a patch and then applied to the real DOM</text>
+
+  <rect x="60" y="140" width="330" height="150" rx="18" fill="#FFFFFF" stroke="#CFE0F2" stroke-width="2"/>
+  <text x="88" y="183" fill="#2B6CB0" font-size="24" font-family="Arial, sans-serif" font-weight="700">ADD</text>
+  <text x="88" y="220" fill="#1F2937" font-size="17" font-family="Arial, sans-serif">Old: 3 list items</text>
+  <text x="88" y="248" fill="#1F2937" font-size="17" font-family="Arial, sans-serif">New: 4 list items</text>
+  <text x="88" y="276" fill="#5B6675" font-size="15" font-family="Arial, sans-serif">Insert a new node at the target index.</text>
+
+  <rect x="435" y="140" width="330" height="150" rx="18" fill="#FFFFFF" stroke="#CFE0F2" stroke-width="2"/>
+  <text x="463" y="183" fill="#2B6CB0" font-size="24" font-family="Arial, sans-serif" font-weight="700">REMOVE</text>
+  <text x="463" y="220" fill="#1F2937" font-size="17" font-family="Arial, sans-serif">Old: node exists</text>
+  <text x="463" y="248" fill="#1F2937" font-size="17" font-family="Arial, sans-serif">New: node missing</text>
+  <text x="463" y="276" fill="#5B6675" font-size="15" font-family="Arial, sans-serif">Delete the old node from the DOM.</text>
+
+  <rect x="810" y="140" width="330" height="150" rx="18" fill="#FFFFFF" stroke="#CFE0F2" stroke-width="2"/>
+  <text x="838" y="183" fill="#2B6CB0" font-size="24" font-family="Arial, sans-serif" font-weight="700">REPLACE</text>
+  <text x="838" y="220" fill="#1F2937" font-size="17" font-family="Arial, sans-serif">Old: &lt;p&gt;</text>
+  <text x="838" y="248" fill="#1F2937" font-size="17" font-family="Arial, sans-serif">New: &lt;h2&gt;</text>
+  <text x="838" y="276" fill="#5B6675" font-size="15" font-family="Arial, sans-serif">Swap the whole node when tag changes.</text>
+
+  <rect x="245" y="330" width="330" height="150" rx="18" fill="#FFFFFF" stroke="#CFE0F2" stroke-width="2"/>
+  <text x="273" y="373" fill="#2B6CB0" font-size="24" font-family="Arial, sans-serif" font-weight="700">TEXT</text>
+  <text x="273" y="410" fill="#1F2937" font-size="17" font-family="Arial, sans-serif">Old: "Mini Virtual DOM"</text>
+  <text x="273" y="438" fill="#1F2937" font-size="17" font-family="Arial, sans-serif">New: "Mini Virtual DOM Test"</text>
+  <text x="273" y="466" fill="#5B6675" font-size="15" font-family="Arial, sans-serif">Only update the text content.</text>
+
+  <rect x="625" y="330" width="330" height="150" rx="18" fill="#FFFFFF" stroke="#CFE0F2" stroke-width="2"/>
+  <text x="653" y="373" fill="#2B6CB0" font-size="24" font-family="Arial, sans-serif" font-weight="700">PROPS</text>
+  <text x="653" y="410" fill="#1F2937" font-size="17" font-family="Arial, sans-serif">Old: class="demo-card"</text>
+  <text x="653" y="438" fill="#1F2937" font-size="17" font-family="Arial, sans-serif">New: class="demo-card updated"</text>
+  <text x="653" y="466" fill="#5B6675" font-size="15" font-family="Arial, sans-serif">Add, edit, or remove attributes only.</text>
+</svg>
