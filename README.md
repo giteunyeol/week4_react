@@ -3,7 +3,7 @@
 ## Index
 1. virtual DOM이란
 2. virtual DOM이 왜 필요한가
-3. virtual DOM의 구조
+3. 우리팀이 만든 virtual DOM의 구조
 4. Diff 알고리즘은 언제 어디에 어떻게 쓰이는가
 5. React에서 실제 DOM을 변경할 때, Virtual DOM과 DIFF 알고리즘의 동작 방식
 6. Edge case
@@ -12,7 +12,7 @@
 
 ## virtual DOM 이란
 
-- 실제 DOM의 가벼운 복사본
+- 실제 DOM의 가벼운 복사본. 즉, DOM을 단순한 JavaScript 객체 구조로 표현한 것.
 - 리액트가 UI의 변화를 효율적으로 처리하기 위해 사용된다
 
 
@@ -22,7 +22,8 @@
   DOM이 Update 된다 = HTML 요소에 변화가 발생
   브라우저는 DOM이 변화하면 화면을 다시 그린다
 
-  ##그런데
+## 그런데
+  변화 하나하나마다 화면을 계속 새로 그리는 **오버헤드**가 일어난다.
   
 
 
