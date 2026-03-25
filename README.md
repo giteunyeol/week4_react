@@ -1,5 +1,6 @@
 # week4_react_virtual DOM & DIFF algorithm
 
+(./assets/url_qrcodecreator.com_20_14_36.png)
 
 </br></br>
 ## 프로젝트 한 줄 요약
