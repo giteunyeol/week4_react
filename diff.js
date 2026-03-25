@@ -39,6 +39,10 @@ function diff(oldVNode, newVNode, path = []) {
     return patches;
   }
 
+  if (oldVNode.type === "text" && newVNode.type === "text") {
+    return patches;
+  }
+
   if (oldVNode.tag !== newVNode.tag) {
     patches.push({ type: "REPLACE", path, node: newVNode });
     return patches;
