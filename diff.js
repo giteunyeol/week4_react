@@ -1,5 +1,3 @@
-const { renderVNode } = window.VDOM;
-
 function diffProps(oldProps, newProps) {
   const changes = {};
 
@@ -109,6 +107,7 @@ function applyPropChanges(targetNode, propChanges) {
 
 function applySinglePatch(realRoot, patch) {
   const rootNode = realRoot.firstChild;
+  const renderVNode = window.VDOM.renderVNode;
 
   if (patch.type === "ADD" && patch.path.length === 0) {
     while (realRoot.firstChild) {

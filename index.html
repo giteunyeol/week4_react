@@ -50,9 +50,29 @@
               오른쪽 HTML을 수정하면 아래 미리보기가 바로 바뀌고, <strong>Patch</strong> 버튼으로 왼쪽 실제 DOM에 반영됩니다.
             </div>
             <label class="editor-label" for="markup-editor">수정할 HTML</label>
-            <textarea id="markup-editor" class="markup-editor" spellcheck="false"></textarea>
+            <textarea id="markup-editor" class="markup-editor" spellcheck="false"><div class="demo-card" data-theme="light">
+  <h1>Mini Virtual DOM</h1>
+  <p class="description">오른쪽 내용을 수정한 뒤 Patch 버튼으로 왼쪽에 반영해 보세요.</p>
+  <ul class="todo-list">
+    <li data-id="1">DOM을 Virtual DOM으로 변환</li>
+    <li data-id="2">Diff 계산</li>
+    <li data-id="3">Patch 적용</li>
+  </ul>
+  <button class="sample-button" type="button">샘플 버튼</button>
+</div></textarea>
             <label class="editor-label" for="test-root">테스트 미리보기 DOM</label>
-            <div id="test-root" class="preview-root"></div>
+            <div id="test-root" class="preview-root">
+              <div class="demo-card" data-theme="light">
+                <h1>Mini Virtual DOM</h1>
+                <p class="description">오른쪽 HTML 입력창을 수정하면 이 미리보기가 바뀝니다.</p>
+                <ul class="todo-list">
+                  <li data-id="1">제목이나 문장을 바꿔보세요</li>
+                  <li data-id="2">li를 추가하거나 삭제해보세요</li>
+                  <li data-id="3">Patch를 눌러 왼쪽과 비교하세요</li>
+                </ul>
+                <button class="sample-button" type="button">미리보기 버튼</button>
+              </div>
+            </div>
           </div>
         </section>
       </main>

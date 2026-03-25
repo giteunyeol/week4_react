@@ -1,6 +1,5 @@
-const { cloneVNode } = window.VDOM;
-
 function createHistoryManager(initialVNode) {
+  const cloneVNode = window.VDOM.cloneVNode;
   const snapshots = [cloneVNode(initialVNode)];
   let currentIndex = 0;
 
