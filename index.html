@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vanilla Virtual DOM Demo</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <div class="page">
+      <header class="top-bar">
+        <div>
+          <h1>Virtual DOM / Diff / Patch Demo</h1>
+          <p>왼쪽 실제 DOM과 오른쪽 테스트 영역을 비교하는 최소 기능 시연 페이지</p>
+          <div id="runtime-status" class="runtime-status">런타임 상태: HTML 로드 완료, JS 초기화 대기 중</div>
+        </div>
+        <div class="button-group">
+          <button id="patch-button" type="button">Patch</button>
+          <button id="undo-button" type="button">Undo</button>
+          <button id="redo-button" type="button">Redo</button>
+        </div>
+      </header>
+
+      <main class="workspace">
+        <section class="panel">
+          <div class="panel-header">
+            <h2>실제 DOM</h2>
+            <span>Patch 대상</span>
+          </div>
+          <div id="actual-root" class="panel-body">
+            <div class="demo-card" data-theme="light">
+              <h1>Mini Virtual DOM</h1>
+              <p class="description">오른쪽 내용을 수정한 뒤 Patch 버튼으로 왼쪽에 반영해 보세요.</p>
+              <ul class="todo-list">
+                <li data-id="1">DOM을 Virtual DOM으로 변환</li>
+                <li data-id="2">Diff 계산</li>
+                <li data-id="3">Patch 적용</li>
+              </ul>
+              <button class="sample-button" type="button">샘플 버튼</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-header">
+            <h2>테스트 영역</h2>
+            <span id="preview-status">HTML을 수정해 보세요</span>
+          </div>
+          <div class="panel-body test-panel">
+            <div class="editor-guide">
+              오른쪽 HTML을 수정하면 아래 미리보기가 바로 바뀌고, <strong>Patch</strong> 버튼으로 왼쪽 실제 DOM에 반영됩니다.
+            </div>
+            <label class="editor-label" for="markup-editor">수정할 HTML</label>
+            <textarea id="markup-editor" class="markup-editor" spellcheck="false"><div class="demo-card" data-theme="light">
+  <h1>Mini Virtual DOM</h1>
+  <p class="description">오른쪽 내용을 수정한 뒤 Patch 버튼으로 왼쪽에 반영해 보세요.</p>
+  <ul class="todo-list">
+    <li data-id="1">DOM을 Virtual DOM으로 변환</li>
+    <li data-id="2">Diff 계산</li>
+    <li data-id="3">Patch 적용</li>
+  </ul>
+  <button class="sample-button" type="button">샘플 버튼</button>
+</div></textarea>
+            <label class="editor-label" for="test-root">테스트 미리보기 DOM</label>
+            <div id="test-root" class="preview-root">
+              <div class="demo-card" data-theme="light">
+                <h1>Mini Virtual DOM</h1>
+                <p class="description">오른쪽 HTML 입력창을 수정하면 이 미리보기가 바뀝니다.</p>
+                <ul class="todo-list">
+                  <li data-id="1">제목이나 문장을 바꿔보세요</li>
+                  <li data-id="2">li를 추가하거나 삭제해보세요</li>
+                  <li data-id="3">Patch를 눌러 왼쪽과 비교하세요</li>
+                </ul>
+                <button class="sample-button" type="button">미리보기 버튼</button>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script defer src="./vdom.js"></script>
+    <script defer src="./diff.js"></script>
+    <script defer src="./history.js"></script>
+    <script defer src="./app.js"></script>
+  </body>
+</html>
