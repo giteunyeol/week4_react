@@ -67,8 +67,8 @@ function comparePathsDescending(a, b) {
   const maxLength = Math.max(a.path.length, b.path.length);
 
   for (let index = 0; index < maxLength; index += 1) {
-    const aValue = a.path[index] ?? -1;
-    const bValue = b.path[index] ?? -1;
+    const aValue = a.path[index] === undefined ? -1 : a.path[index];
+    const bValue = b.path[index] === undefined ? -1 : b.path[index];
 
     if (aValue !== bValue) {
       return bValue - aValue;
@@ -111,14 +111,23 @@ function applySinglePatch(realRoot, patch) {
   const rootNode = realRoot.firstChild;
 
   if (patch.type === "ADD" && patch.path.length === 0) {
-    realRoot.replaceChildren(renderVNode(patch.node));
+    while (realRoot.firstChild) {
+      realRoot.removeChild(realRoot.firstChild);
+    }
+
+    realRoot.appendChild(renderVNode(patch.node));
     return;
   }
 
   const parentPath = patch.path.slice(0, -1);
   const targetIndex = patch.path[patch.path.length - 1];
   const parentNode = patch.path.length === 0 ? realRoot : getNodeByPath(rootNode, parentPath);
-  const targetNode = patch.path.length === 0 ? rootNode : parentNode?.childNodes[targetIndex] ?? null;
+  const targetNode =
+    patch.path.length === 0
+      ? rootNode
+      : parentNode && parentNode.childNodes
+        ? parentNode.childNodes[targetIndex] || null
+        : null;
 
   switch (patch.type) {
     case "ADD": {
@@ -128,15 +137,19 @@ function applySinglePatch(realRoot, patch) {
       break;
     }
     case "REMOVE":
-      if (targetNode) {
-        targetNode.remove();
+      if (targetNode && parentNode) {
+        parentNode.removeChild(targetNode);
       }
       break;
     case "REPLACE":
       if (patch.path.length === 0) {
-        realRoot.replaceChildren(renderVNode(patch.node));
+        while (realRoot.firstChild) {
+          realRoot.removeChild(realRoot.firstChild);
+        }
+
+        realRoot.appendChild(renderVNode(patch.node));
       } else if (targetNode) {
-        targetNode.replaceWith(renderVNode(patch.node));
+        parentNode.replaceChild(renderVNode(patch.node), targetNode);
       }
       break;
     case "TEXT":

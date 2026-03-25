@@ -12,8 +12,18 @@ const initialVNode = domToVNode(actualRoot.firstElementChild);
 const history = createHistoryManager(initialVNode);
 let currentVNode = cloneVNode(initialVNode);
 
+function replaceChildrenCompat(rootElement, nextChild) {
+  while (rootElement.firstChild) {
+    rootElement.removeChild(rootElement.firstChild);
+  }
+
+  if (nextChild) {
+    rootElement.appendChild(nextChild);
+  }
+}
+
 function renderArea(rootElement, vnode) {
-  rootElement.replaceChildren(renderVNode(vnode));
+  replaceChildrenCompat(rootElement, renderVNode(vnode));
 }
 
 function renderTestArea(vnode) {
@@ -42,7 +52,7 @@ function printDiffResult(patches) {
   const rows = patches.map((patch) => ({
     type: patch.type,
     path: patch.path.length === 0 ? "root" : patch.path.join(" > "),
-    detail: patch.text || patch.node?.tag || Object.keys(patch.props || {}).join(", "),
+    detail: patch.text || (patch.node && patch.node.tag) || Object.keys(patch.props || {}).join(", "),
   }));
 
   console.group("Diff Result");
