@@ -47,7 +47,7 @@
 
 </br></br></br>
 
-## React가 virtual DOM을 쓰는 이유 feat.실제 DOM이 느린 이유
+## React가 virtual DOM을 쓰는 이유   (feat.실제 DOM이 느린 이유)
 
 실제 DOM은 단순한 JavaScript 객체가 아니라 브라우저 렌더링 엔진과 직접 연결된 구조입니다.  
 DOM을 자주 건드리면 레이아웃 계산과 페인팅 비용이 따라옵니다.
