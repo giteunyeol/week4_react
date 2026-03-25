@@ -8,6 +8,12 @@
 - Facebook에서 탄생한 react의 주요기능 중 virtual DOM 과 그 안에서 작동하는 DIFF Algorithm 이 데모 소셜 네트워크 브라우저에서 어떻게 동작하는지 확인합니다
 </br></br></br>
 
+## 왜 virtual DOM은 세상에 나왔는가
+
+![facebook](./assets/Facebook_f_logo_(2019).svg.png)
+
+- Facebook의 복잡한 UI, 상태동기화를 더 예측 가능하게 다루기 위해 즉, 복잡성을 낮추기 위해 React가 나왔고 virtual DOM은 이를 실용적인 성능으로 가능하게 만든 구현 전략
+
 ## 일반적인 React 환경에서 virtual DOM FLOW
 
 
