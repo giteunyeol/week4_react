@@ -1,6 +1,5 @@
 # week4_react_virtual DOM & DIFF algorithm
 
-`소셜 피드 Like 상호작용 데모`
 
 </br></br>
 ## 프로젝트 한 줄 요약
